@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>跑酷</title>
+		<script src="js/games.js"></script>
+		<script src="js/imgloa.js"></script>
+		<script src="js/touch.js"></script>
+		<script src="js/hitPix.js"></script>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			html,body{
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+				position: relative;				
+			}
+			canvas{				
+				background: url(img/back/back.jpg) repeat-x;
+				
+			}
+			div{
+				width: 120px;
+				height: 40px;
+				border: 6px solid gold;
+				position: absolute;
+				top: 20px;
+				background: orangered;
+				border-radius: 26px;
+				line-height: 40px;
+				text-align: center;
+				color: #fff;
+				font-family: "微软雅黑";
+			}
+			div:nth-child(1){
+				left:20px;
+			}
+			div:nth-child(2){
+				left:200px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="currentscore">分数：<span>0</span></div>
+		<div class="leftNum">生命值：<span>3</span></div>
+		<canvas id="" width="" height=""></canvas>
+		<!--跑步状态-->
+		<img src="imgs/run1.png" hidden="" class="run"/>
+		<img src="imgs/run2.png" hidden="" class="run"/>
+		<img src="imgs/run3.png" hidden="" class="run"/>
+		<img src="imgs/run4.png" hidden="" class="run"/>
+		<img src="imgs/run5.png" hidden="" class="run"/>
+		<img src="imgs/run6.png" hidden="" class="run"/>
+		<img src="imgs/run7.png" hidden="" class="run"/>
+		<img src="imgs/run8.png" hidden="" class="run"/>
+		<img src="imgs/run9.png" hidden="" class="run"/>
+		<img src="imgs/run10.png" hidden="" class="run"/>
+		<img src="imgs/run11.png" hidden="" class="run"/>
+		<img src="imgs/run12.png" hidden="" class="run"/>
+		<img src="imgs/run13.png" hidden="" class="run"/>
+		<img src="imgs/run14.png" hidden="" class="run"/>
+		<img src="imgs/run15.png" hidden="" class="run"/>
+		
+		<!--跳跃状态-->
+		<img src="imgs/run15.png" hidden="" class="jump"/>
+		
+		<!--障碍物-->
+		<img src="img/hinder/boom.png" alt="" hidden="" class="hinder" />
+		<img src="img/hinder/chick.png" alt="" hidden="" class="hinder" />
+		<img src="img/hinder/egg.png" alt="" hidden="" class="hinder" />
+		<img src="img/hinder/flow.png" alt="" hidden="" class="hinder" />
+		<img src="img/hinder/grass.png" alt="" hidden="" class="hinder" />
+		<img src="img/hinder/pail.png" alt="" hidden="" class="hinder" />
+		<img src="img/hinder/stone.png" alt="" hidden="" class="hinder" />
+		<img src="img/hinder/tree.png" alt="" hidden="" class="hinder" />
+		<img src="img/hinder/ys.png" alt="" hidden="" class="hinder" />
+	</body>
+	<script>
+		window.onload=function(){
+			var canvas=document.querySelector("canvas");
+			var cobj=canvas.getContext("2d");
+			var runImg=document.querySelectorAll(".run");
+            var jumpImg=document.querySelectorAll(".jump");
+            var hinderImg=document.querySelectorAll(".hinder");
+			var newGame=new Game(canvas,cobj,runImg,jumpImg,hinderImg);			
+			//设置画布的大小，满屏
+			window.onresize=function(){
+				var clientW=document.documentElement.clientWidth;
+				var clientH=document.documentElement.clientHeight;
+				canvas.width=clientW;
+				canvas.height=clientH;
+				var biliW=canvas.width/1136;
+				var biliH=canvas.height/544;
+				if(biliW>biliH){
+					canvas.style.backgroundSize="contain";
+				}else{
+					canvas.style.backgroundSize="cover";
+				}
+				newGame.person.y=canvas.height-newGame.person.height;
+				for(var i=0;i<newGame.hinderArr.length;i++){
+                  	newGame.hinderArr[i].y=canvas.height-newGame.hinderArr[i].height;
+              	}
+			}
+			window.onresize();
+			var imgloadObj= new imageLoad(document.querySelectorAll("img"));
+            imgloadObj.loadAll(function(){
+                 newGame.play();
+            });
+            
+            
+		}
+	</script>
+</html>
